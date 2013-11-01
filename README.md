@@ -1,7 +1,7 @@
 silverstripe-phpexcel
 =====================
 
-Export DataObjects to an Excel file
+Same as GridFieldExportButton, but exports data to an Excel file.
 
 	:::php
 	$gridField = new GridField('MyDataObjects', 'MyDataObjects', MyDataObject::get(), 
