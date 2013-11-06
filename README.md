@@ -8,3 +8,8 @@ Same as GridFieldExportButton, but exports data to an Excel file.
 			GridFieldConfig_RecordEditor::create()
 			->addComponent(new GridFieldExportToExcelButton())
 		);
+
+## Requirements
+* PHPExcel https://github.com/PHPOffice/PHPExcel
+
+This will install when you use composer.
