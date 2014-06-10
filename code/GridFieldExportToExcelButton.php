@@ -76,7 +76,7 @@ class GridFieldExportToExcelButton extends GridFieldExportButton {
 		}
 
 		$row = 2;
-		foreach($items as $item) {
+		foreach($items->limit(null) as $item) {
 			$columnData = array();
 			$col = 'A';
 			foreach($excelColumns as $columnSource => $columnHeader) {
