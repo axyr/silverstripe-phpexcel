@@ -16,10 +16,10 @@ class GridFieldExportToExcelButton extends GridFieldExportButton {
 	 */
 	public function getHTMLFragments($gridField) {
 		$button = new GridField_FormAction(
-			$gridField, 
-			'export', 
+			$gridField,
+			'export',
 			_t('TableListField.EXCELEXPORT', 'Export to Excel'),
-			'export', 
+			'export',
 			null
 		);
 		$button->setAttribute('data-icon', 'download-csv');
@@ -49,23 +49,23 @@ class GridFieldExportToExcelButton extends GridFieldExportButton {
 	 * @return array
 	 */
 	public function generateExportFileData($gridField) {
-		
+
 		$excelColumns = ($this->exportColumns)
 			? $this->exportColumns
 			: singleton($gridField->getModelClass())->summaryFields();
-		
-		$objPHPExcel = new PHPExcel();
+
+		$objPHPExcel = new \PHPExcel\Spreadsheet();
 		$worksheet = $objPHPExcel->getActiveSheet()->setTitle($gridField->getModelClass());
-		
+
 		$col = 'A';
 		foreach($excelColumns as $columnSource => $columnHeader) {
 			$heading = (!is_string($columnHeader) && is_callable($columnHeader)) ? $columnSource : $columnHeader;
 			$worksheet->setCellValue($col.'1', $heading);
 			$col++;
 		}
-			
+
 		$worksheet->freezePane('A2');
-		
+
 		$items = $gridField->getManipulatedList();
 
 		// @todo should GridFieldComponents change behaviour based on whether others are available in the config?
@@ -91,17 +91,17 @@ class GridFieldExportToExcelButton extends GridFieldExportButton {
 				} else {
 					$value = $gridField->getDataFieldValue($item, $columnSource);
 				}
-				
-				$worksheet->getCell($col.$row)->setValueExplicit($value, PHPExcel_Cell_DataType::TYPE_STRING);
+
+				$worksheet->getCell($col.$row)->setValueExplicit($value, PHPExcel\Cell\DataType::TYPE_STRING);
 				$col++;
-				
+
 			}
-			
+
 			$row++;
 			$item->destroy();
 		}
-		
-		$writer = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+
+		$writer = PHPExcel\IOFactory::createWriter($objPHPExcel, 'Excel2007');
 		ob_start();
 		$writer->save('php://output');
 		$data = ob_get_clean();
