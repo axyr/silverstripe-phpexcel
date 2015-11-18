@@ -103,12 +103,12 @@ class GridFieldExportToExcelButton extends GridFieldExportButton {
 								elseif($component instanceof SS_List) {
 									$component = $component->relation($relation);
 								} 
-								elseif($component instanceof DataObject && ($dbObject = $component->obj($relation))) {
+								elseif($component instanceof DataObject && ($dbObject = $component->obj($relation, null, false))) {
 									$component = $dbObject;
 								}
 							}
 						}
-						elseif($component instanceof DataObject && ($dbObject = $component->obj($columnSource))) {
+						elseif($component instanceof DataObject && ($dbObject = $component->obj($columnSource, null, false))) {
 							$component = $dbObject;
 						}
 
@@ -125,17 +125,17 @@ class GridFieldExportToExcelButton extends GridFieldExportButton {
 									elseif($component instanceof SS_List) {
 										$component = $component->relation($relation);
 									} 
-									elseif($component instanceof DataObject && ($dbObject = $component->obj($relation))) {
+									elseif($component instanceof DataObject && ($dbObject = $component->obj($relation, null, false))) {
 										$component = $dbObject;
 									}
 								}
 							}
-							elseif($component instanceof DataObject && ($dbObject = $component->obj($columnHeader))) {
+							elseif($component instanceof DataObject && ($dbObject = $component->obj($columnHeader, null, false))) {
 								$component = $dbObject;
 							}
 						}
-						
-						if($component && ($component instanceof Decimal || $component instanceof Float || $component instanceof Int)){
+
+						if($component && ($component instanceof Decimal || $component instanceof Float || $component instanceof Int || is_numeric($component))){
 							$worksheet->getCell($col.$row)->setValue($value);
 						}
 						else{
@@ -146,7 +146,6 @@ class GridFieldExportToExcelButton extends GridFieldExportButton {
 					$col++;
 					
 				}
-				
 				$row++;
 			}
 			if($item->hasMethod('destroy')) {
