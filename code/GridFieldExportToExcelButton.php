@@ -35,7 +35,7 @@ class GridFieldExportToExcelButton extends GridFieldExportButton {
 	public function handleExport($gridField, $request = null) {
 		$now = date("d-m-Y-H-i");
 		$title = str_replace(' ', '-', strtolower(singleton($gridField->getModelClass())->singular_name()));
-		$fileName = "export-$title-$now.xlsx";
+		$fileName = "export-$title-$now.xls";
 
 		if($fileData = $this->generateExportFileData($gridField)){
 			return SS_HTTPRequest::send_file($fileData, $fileName, 'application/xls+xml');
@@ -153,7 +153,7 @@ class GridFieldExportToExcelButton extends GridFieldExportButton {
 			}
 		}
 		
-		$writer = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+		$writer = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 		ob_start();
 		$writer->save('php://output');
 		$data = ob_get_clean();
