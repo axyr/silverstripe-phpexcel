@@ -38,7 +38,7 @@ class GridFieldExportToExcelButton extends GridFieldExportButton {
 		$fileName = "export-$title-$now.xlsx";
 
 		if($fileData = $this->generateExportFileData($gridField)){
-			return SS_HTTPRequest::send_file($fileData, $fileName, 'application/xslt+xml');
+			return SS_HTTPRequest::send_file($fileData, $fileName, 'application/xls+xml');
 		}
 	}
 
